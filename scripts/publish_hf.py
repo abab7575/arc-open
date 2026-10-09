@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Mirror ARC's open dataset (https://www.arcreport.ai/data) to a Hugging Face dataset repo.
 
-Default target: arcreport/arc-agent-commerce (CC-BY-4.0).
+Default target: ArcReport/arc-agent-commerce (CC-BY-4.0).
 
   python3 scripts/publish_hf.py --dry-run --out ./hf-staging   # build the files only, no upload
   HF_TOKEN=hf_xxx python3 scripts/publish_hf.py                  # build + upload (needs: pip install huggingface_hub)
@@ -20,8 +20,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SOURCE = "https://www.arcreport.ai"
-DEFAULT_REPO = "arcreport/arc-agent-commerce"
-CARD_BODY = ROOT / "docs" / "dataset-card.md"
+DEFAULT_REPO = "ArcReport/arc-agent-commerce"
+CARD = ROOT / "docs" / "dataset-card.md"
 UA = "arc-open-publish-hf/0.1 (+https://github.com/abab7575/arc-open)"
 
 TABLE_DESC = {
@@ -34,6 +34,8 @@ TABLE_DESC = {
 
 
 def get(url: str) -> bytes:
+    if not url.startswith(("http://", "https://")):
+        return Path(url).read_bytes()  # local --source (e.g. a checkout's public/ folder)
     req = urllib.request.Request(url, headers={"user-agent": UA})
     with urllib.request.urlopen(req, timeout=60) as r:
         return r.read()
@@ -61,7 +63,7 @@ def build_card(manifest: dict, versions: list, repo: str) -> str:
             yaml.append("  default: true")
     yaml.append("---")
 
-    body = CARD_BODY.read_text()
+    body = Path(CARD).read_text()
     body = re.sub(r"\A---\n.*?\n---\n", "", body, flags=re.S).lstrip()
     rows = "\n".join(f"| `{f['name']}` | {f['rows']:,} | {TABLE_DESC.get(f['name'], '')} |" for f in manifest["files"])
     vlist = "\n".join(f"- `{v['snapshot_version']}` (generated {v['generated_at'][:16].replace('T', ' ')} UTC, method {v['method_version']})" for v in versions)
@@ -164,15 +166,18 @@ def upload(out: Path, repo: str, version: str, token: str):
 
 
 def main():
+    global CARD
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dry-run", action="store_true", help="build the files only; never upload")
     ap.add_argument("--out", default=str(ROOT / "hf-staging"))
     ap.add_argument("--repo", default=DEFAULT_REPO)
-    ap.add_argument("--source", default=DEFAULT_SOURCE, help="ARC origin serving /data (default %(default)s)")
+    ap.add_argument("--source", default=DEFAULT_SOURCE, help="ARC origin serving /data, or a local folder containing data/ (default %(default)s)")
+    ap.add_argument("--card", default=str(CARD), help="dataset card body (markdown; YAML is generated)")
     ap.add_argument("--latest-only", action="store_true", help="stage only the newest version, not the full history")
     a = ap.parse_args()
+    CARD = Path(a.card)
     out = Path(a.out).resolve()
-    r = stage(a.source.rstrip("/"), out, a.repo, not a.latest_only)
+    r = stage(a.source.rstrip("/") if a.source.startswith("http") else str(Path(a.source).resolve()), out, a.repo, not a.latest_only)
     scan_clean(out)
     print(f"staged {r['files']} data files for {len(r['versions'])} version(s), latest {r['version']}, in {out}")
     if a.dry_run:

@@ -10,7 +10,7 @@ This repository holds the reusable parts of ARC, free for anyone to use, copy an
 | [`packages/ucp-validator`](packages/ucp-validator) | The UCP business-profile validator: published JSON Schema + spec rules + clearly labelled interop hints | MIT (vendored UCP schemas Apache-2.0) |
 | [`benchmark/`](benchmark) | **ARC-100 v1**, a fixed set of 100 real stores for comparing shopping agents, the selection code that reproduces it, and the leaderboard submission validator | Data CC-BY-4.0, code MIT |
 | [`docs/`](docs) | Methodology and scoring, leaderboard submission spec, dataset schema/card, OpenAPI for ARC's public API, MCP server entry | CC-BY-4.0 |
-| [`scripts/publish_hf.py`](scripts/publish_hf.py) | Mirrors the weekly open dataset to Hugging Face | MIT |
+| [`scripts/publish_hf.py`](scripts/publish_hf.py) | Mirrors the weekly open dataset to [Hugging Face](https://huggingface.co/datasets/ArcReport/arc-agent-commerce) (`--dry-run` builds files only; upload reads `HF_TOKEN`) | MIT |
 
 ## Quickstart
 
@@ -38,6 +38,7 @@ Benchmark your shopping agent: run it on the 100 stores in [`benchmark/arc-100/v
 ## The data
 
 - **Open dataset** (weekly snapshots, CSV and Parquet, CC-BY-4.0): <https://www.arcreport.ai/data>. Field reference: [`docs/dataset-card.md`](docs/dataset-card.md).
+- **On Hugging Face**: [`ArcReport/arc-agent-commerce`](https://huggingface.co/datasets/ArcReport/arc-agent-commerce), refreshed weekly: `load_dataset("ArcReport/arc-agent-commerce", "rails_checks")`
 - **Developer hub** (free API, MCP server, UCP validator): <https://www.arcreport.ai/developers>
 - **Method**: [`docs/methodology.md`](docs/methodology.md) and <https://www.arcreport.ai/methodology>
 - **Leaderboard**: <https://www.arcreport.ai/leaderboard>
