@@ -25,6 +25,7 @@ CARD = ROOT / "docs" / "dataset-card.md"
 UA = "arc-open-publish-hf/0.1 (+https://github.com/abab7575/arc-open)"
 
 TABLE_DESC = {
+    "store_answers": "Start here. One row per store in plain words: can AI agents find products and get a checkout link, what blocks them, a one-sentence verdict, top fix, and whether the answer is from the automated HTTP check or also the browser cart test.",
     "stores": "Latest completed ARC Index result per store (browser cart test: score, personas that carted, failure label).",
     "rails_checks": "Latest HTTP agent check per store domain (UCP profile, WebMCP, storefront MCP, catalog tool, cart link, checkout WebMCP).",
     "adoption_history": "Weekly aggregate counts by source and metric (long format).",
@@ -49,29 +50,57 @@ def size_category(rows: int) -> str:
     return "n<1K" if rows < 1_000 else "1K<n<10K" if rows < 10_000 else "10K<n<100K" if rows < 100_000 else "100K<n<1M"
 
 
+def headline_block(manifest: dict) -> str:
+    h = manifest.get("headline")
+    if not h:
+        return ""
+    d = lambda iso: __import__("datetime").date.fromisoformat(iso).strftime("%-d %b %Y")
+    return f"""**Snapshot `{manifest.get('snapshot_version') or manifest['snapshot_date']}`: {h['stores']:,} stores, checked {d(h['firstCheck'])} to {d(h['lastCheck'])}.** The check finished for {h['tested']:,} of them ({h['notTested']} did not respond in time and are marked `not_tested`). Percentages below are of those {h['tested']:,}.
+
+| | Stores | Share |
+|---|---:|---:|
+| **AI agents can get a checkout link** through the store's agent connection | {h['checkout']:,} | **{h['checkoutPct']}%** |
+| AI agents can search products through an agent connection | {h['find']:,} | {h['findPct']}% |
+| No agent connection found: no product search, no valid UCP profile, not blocked (agents must click through the site like a person) | {h['none']:,} | {h['nonePct']}% |
+| Bot protection blocked ARC's agent check | {h['blocked']:,} | {h['blockedPct']}% |
+| Publishes a valid Universal Commerce Protocol (UCP) profile | {h['ucp']:,} | {h['ucpPct']}% |
+| Shopify stores with a checkout link agents can use | {h['shopifyCheckout']:,} of {h['shopify']:,} | {h['shopifyCheckoutPct']}% |
+| Stores not detected as Shopify with a checkout link agents can use | {h['otherCheckout']:,} of {h['otherPlatforms']:,} | {h['otherCheckoutPct']}% |
+| robots.txt blocks at least one AI crawler (of {h['robotsKnown']:,} readable robots.txt files) | {h['robotsBlock']:,} | {h['robotsBlockPct']}% |
+| robots.txt blocks AI assistants fetching pages for a user (same base) | {h['answerBlock']:,} | {h['answerBlockPct']}% |
+
+All rows come from ARC's **automated HTTP check**. {h['browser']} stores also have a **browser cart test** (`browser_cart_test`). A checkout link is not a purchase: ARC never pays or places an order.
+"""
+
+
 def build_card(manifest: dict, versions: list, repo: str) -> str:
     tables = [f["name"] for f in manifest["files"]]
     biggest = max(f["rows"] for f in manifest["files"])
     version = manifest.get("snapshot_version") or manifest["snapshot_date"]
     year = manifest["snapshot_date"][:4]
-    yaml = ["---", "license: cc-by-4.0", "pretty_name: ARC Agent Commerce Index", "language:", "- en",
-            "tags:", *[f"- {t}" for t in ["agentic-commerce", "ai-agents", "e-commerce", "benchmark", "ucp", "mcp", "webmcp", "tabular"]],
+    default = "store_answers" if "store_answers" in tables else "rails_checks"
+    h = manifest.get("headline") or {}
+    title = f"# {h['stores']:,} online stores checked: can AI shopping agents buy from them?" if h else "# ARC Agent Commerce Index"
+    yaml = ["---", "license: cc-by-4.0", 'pretty_name: "ARC: can AI shopping agents buy from these stores?"', "language:", "- en",
+            "tags:", *[f"- {t}" for t in ["agentic-commerce", "ai-agents", "e-commerce", "shopping-agents", "benchmark", "ucp", "mcp", "webmcp", "tabular"]],
             "size_categories:", f"- {size_category(biggest)}", "configs:"]
-    for i, t in enumerate(tables):
+    for t in [default] + [t for t in tables if t != default]:  # the first config is what the viewer opens
         yaml += [f"- config_name: {t}", f"  data_files: latest/{t}.parquet"]
-        if t == "rails_checks":
+        if t == default:
             yaml.append("  default: true")
     yaml.append("---")
 
     body = Path(CARD).read_text()
     body = re.sub(r"\A---\n.*?\n---\n", "", body, flags=re.S).lstrip()
+    _, _, body = body.partition("\n")  # drop the card's own title; the title above carries the live count
+    intro, _, rest = body.partition("\n## ")
     rows = "\n".join(f"| `{f['name']}` | {f['rows']:,} | {TABLE_DESC.get(f['name'], '')} |" for f in manifest["files"])
     vlist = "\n".join(f"- `{v['snapshot_version']}` (generated {v['generated_at'][:16].replace('T', ' ')} UTC, method {v['method_version']})" for v in versions)
-    hub = f"""## This Hugging Face mirror
+    hub = f"""## Files in this snapshot
 
-Mirror of the official ARC open dataset at [arcreport.ai/data](https://www.arcreport.ai/data). It is updated after each weekly snapshot (Mondays). The files are byte-for-byte copies of ARC's published CSV and Parquet.
+Mirror of the official ARC open dataset at [arcreport.ai/data](https://www.arcreport.ai/data), updated after each weekly snapshot (Mondays). Files are byte-for-byte copies of ARC's published CSV and Parquet.
 
-**Current snapshot:** `{version}` (snapshot date {manifest['snapshot_date']}, generated {manifest.get('generated_at', '')[:16].replace('T', ' ')} UTC, method `{manifest['method_version']}`{f", {manifest['stores_checked']:,} stores with a completed HTTP check" if manifest.get('stores_checked') else ''}).
+**Current snapshot:** `{version}` (snapshot date {manifest['snapshot_date']}, generated {manifest.get('generated_at', '')[:16].replace('T', ' ')} UTC, method `{manifest['method_version']}`).
 
 | Config / table | Rows | What it holds |
 |---|---|---|
@@ -79,25 +108,22 @@ Mirror of the official ARC open dataset at [arcreport.ai/data](https://www.arcre
 
 ```python
 from datasets import load_dataset
-rails = load_dataset("{repo}", "rails_checks", split="train")
-stores = load_dataset("{repo}", "stores", split="train")
+answers = load_dataset("{repo}", "store_answers", split="train")  # start here
 ```
 
-### Versions on the Hub
+Or just download [`latest/store_answers.csv`](https://huggingface.co/datasets/{repo}/resolve/main/latest/store_answers.csv).
+
+### Versions
 - `latest/` is the newest snapshot. **To cite exact numbers, cite a version folder** under `versions/` or the Hub tag `v<version>` (e.g. `v{version}`), not `latest/`.
-- Version folders never change once published. A second export on the same date is `YYYY-MM-DD.r2`, `.r3` and so on.
-- `versions.json` lists every version with row counts and method version.
+- Version folders never change once published. A second export on the same date is `YYYY-MM-DD.r2`, `.r3` and so on. `versions.json` lists every version.
 
 {vlist}
-
-### Methodology
-How every field is measured, and what ARC cannot see: [arcreport.ai/methodology](https://www.arcreport.ai/methodology) and its [changelog](https://www.arcreport.ai/methodology/changelog). Code and docs: [github.com/abab7575/arc-open](https://github.com/abab7575/arc-open). Every row is labelled `measured` or `inferred`; an empty value means not measured, never zero or "no".
 
 ### Citation
 
 ```bibtex
 @misc{{arc_agent_commerce_index_{year},
-  title  = {{ARC Agent Commerce Index: open dataset}},
+  title  = {{ARC: can AI shopping agents buy from these stores? Open dataset}},
   author = {{{{ARC}}}},
   year   = {{{year}}},
   note   = {{Snapshot {version}, method {manifest['method_version']}}},
@@ -107,8 +133,7 @@ How every field is measured, and what ARC cannot see: [arcreport.ai/methodology]
 }}
 ```
 """
-    title, _, rest = body.partition("\n")
-    return "\n".join(yaml) + "\n\n" + title + "\n" + rest.split("\n## ", 1)[0].rstrip() + "\n\n" + hub + "\n## " + rest.split("\n## ", 1)[1]
+    return "\n".join(yaml) + "\n\n" + title + "\n\n" + headline_block(manifest) + "\n" + intro.strip() + "\n\n## " + rest.rstrip() + "\n\n" + hub
 
 
 def stage(source: str, out: Path, repo: str, all_versions: bool) -> dict:

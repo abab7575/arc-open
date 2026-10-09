@@ -1,119 +1,77 @@
 ---
 license: cc-by-4.0
-pretty_name: ARC Agent Commerce Index
-language:
-- en
-tags:
-- agentic-commerce
-- ai-agents
-- e-commerce
-- benchmark
-- mcp
-- ucp
-size_categories:
-- n<1K
-configs:
-- config_name: stores
-  data_files: latest/stores.csv
-- config_name: rails_checks
-  data_files: latest/rails_checks.csv
-- config_name: adoption_history
-  data_files: latest/adoption_history.csv
-- config_name: personas
-  data_files: latest/personas.csv
-- config_name: protocol_matrix
-  data_files: latest/protocol_matrix.csv
+pretty_name: "ARC: can AI shopping agents buy from these stores?"
 ---
 
-# ARC Agent Commerce Index
+# Online stores checked: can AI shopping agents buy from them?
 
-The open benchmark of whether AI agents can actually buy, for every store, agent and protocol. Published by [ARC](https://www.arcreport.ai) at [arcreport.ai/data](https://www.arcreport.ai/data). New dated snapshot every Monday.
+A free, open, per-store answer to one question: **can an AI shopping agent find products and reach checkout at this store?** Published by [ARC](https://www.arcreport.ai) at [arcreport.ai/data](https://www.arcreport.ai/data) under CC-BY-4.0. A new dated snapshot every Monday.
 
-Most trackers count what stores *declare* (a UCP profile, an MCP endpoint). This dataset also records what *happened* when shopping agents tried to put a real product in a real cart, per store and per agent, next to the protocol signals.
+**Start with `store_answers`**: one row per store, plain yes/no answers, a one-sentence verdict, the single most useful fix, and a link to the store's page on ARC with the details.
 
-## Files
+## Column dictionary: `store_answers`
 
-Each snapshot lives in its own immutable version folder and is copied to `latest/`. Every table comes as CSV and Parquet, with a `manifest.json` holding row counts, `snapshot_version`, `generated_at` (UTC) and `supersedes`.
+| Column | What it means |
+|---|---|
+| `domain` | The store's website, without www. |
+| `store_name` | Store name from ARC's curated list. Empty for stores added by the public. |
+| `category` | What the store sells (ARC's label). Empty when ARC has not labelled it. |
+| `platform` | Shop software detected from the homepage (for example Shopify). "Not detected" means no known fingerprint (often a custom site). Empty means the homepage could not be read. |
+| `market` | Where the storefront sells (ARC's curated label, not measured). Empty when not labelled. |
+| `checked_at` | Date (UTC) of the latest automated check. |
+| `can_agents_find_products` | Could an AI agent search the store's products through a machine-readable agent connection and get a product back (the specific product, for the ~90 Index stores where ARC tests one)? yes / no / blocked (bot protection returned a block page to ARC's check) / not_tested (the check did not finish). "no" is about agent connections only: an agent may still click through the website like a person. |
+| `can_agents_get_checkout_link` | Did the agent connection hand back a checkout link for a product it returned? yes / no / not_tested. ARC stops there: it never pays or places an order, so "yes" means an agent can reach checkout, not that a purchase was completed. |
+| `agent_catalog_type` | Which agent connection answered with a product search tool: Shopify UCP MCP, Shopify Storefront MCP, or none. |
+| `ucp_profile_valid` | Does the store publish a valid Universal Commerce Protocol profile at /.well-known/ucp? yes / no / unknown (blocked or errored). |
+| `webmcp` | Does the homepage declare WebMCP tools for in-browser agents? yes / no / not_tested (checks before 6 Oct 2026). |
+| `blocks_ai_crawlers` | Does robots.txt disallow at least one of the AI crawlers ARC tracks (answer, search or training bots) from the homepage or tested product? yes / no / unknown (robots.txt could not be read). A rule in a file, not an observed block. |
+| `blocks_ai_answer_agents` | Same, but only for AI assistants fetching pages for a user (for example ChatGPT-User, Perplexity-User). yes / no / unknown. |
+| `browser_cart_test` | Result of ARC's separate browser cart test, where it exists (about 90 stores): for example "2 of 5 added to cart". Empty means no browser test. |
+| `verdict` | One plain sentence answering "can AI agents buy from this store?" from the checks above. |
+| `top_fix` | The single most useful change for the store, in plain words. Empty when nothing is needed. |
+| `checked_by` | How the answer was measured: "automated HTTP check" or "automated HTTP check + browser cart test". |
+| `evidence_url` | The store's page on ARC with the full details. |
+| `tested_url` | The page the check started from: the homepage for most stores, one product page for Index stores (query string removed). |
+| `source` | How the store got into ARC: index (weekly browser Index), directory (ARC's curated list), submitted (added by the public) or checked (one-off check). |
+| `snapshot_date` | Date of this snapshot. |
+| `method_version` | Version of ARC's method used. |
 
-### Versioning
+## How it is measured
 
-- A version folder never changes once published. The first export on a date is `YYYY-MM-DD/`; any later export on the same date is published as `YYYY-MM-DD.r2/`, `YYYY-MM-DD.r3/` and so on. The exporter refuses to overwrite an existing version.
-- `latest/` is a moving copy of the newest version. To cite exact numbers, cite the version folder (for example `/data/2026-10-07.r5/`), not `latest/`.
-- `versions.json` lists every version with its `generated_at`, `supersedes`, method version, stores checked and row counts.
-- Before this rule (7 Oct 2026), `/data/2026-10-07/` was regenerated four times during the day (rails_checks went from 607 to 647 to 1,044 rows). All five published versions are restored byte-for-byte from the commits that published them, as `2026-10-07/` (r1) to `2026-10-07.r5/`; their manifests carry `restored.source_commit`.
+Two separate methods. Every row says which one it comes from (`checked_by`).
+
+1. **Automated HTTP check (every store).** A plain program, not an AI model and not a browser, requests the store's machine-readable shopping interfaces the way an agent would: the Universal Commerce Protocol profile at `/.well-known/ucp`, Shopify's agent catalog endpoints (`/api/ucp/mcp`, `/api/mcp`), a product search, and the cart step that returns a checkout link. It also reads the homepage (platform fingerprint, WebMCP tags) and robots.txt. It identifies itself, runs at most about once per host per week, and never pays or places an order.
+2. **Browser cart test (fewer than 100 Index stores only).** Five ARC browser test shoppers each try to put one real product in the cart through the normal website, stopping before payment. Shown in `browser_cart_test`. These are ARC's own test runs, not sessions of any named consumer AI product.
+
+## Limitations (please read before citing)
+
+- **A checkout link is not a purchase.** ARC stops at the link. "yes" means an agent could reach checkout through the store's agent connection on the check date, not that an order would succeed.
+- **"no" is about agent connections only.** A store without one can still be used by an agent that clicks through the website like a person. Our browser cart test covers that, but only for fewer than 100 stores.
+- **One check, one moment.** Each answer is the store's latest check (dates in `checked_at`). Stores, bot protection and stock change; a single failed check can be temporary.
+- **"blocked" means ARC's own request got a block page.** Real agents may or may not be treated the same way.
+- **robots.txt is a rule in a file, not an observed block.** Bots may ignore it, and firewalls may block bots that robots.txt allows.
+- **The store list is a sample, not all of e-commerce.** It is ARC's curated directory plus stores the public submitted. It leans toward English-language, direct-to-consumer brands and toward Shopify.
+- **Labels such as `category` and `market` are ARC's curated labels**, not measurements.
+- `not_tested` and `unknown` are used only where there is genuinely no result; they never mean "no".
+
+## Other tables
+
+The full technical detail stays available alongside `store_answers`:
 
 | Table | One row per | What it holds |
 |---|---|---|
-| `stores` | Index store | Latest completed ARC Index result: score, agents that carted, per-agent outcome, failure label |
-| `rails_checks` | Store domain | Latest HTTP check: WebMCP, storefront MCP, UCP MCP, UCP profile, catalog tool, cart link |
-| `adoption_history` | Week × source × metric | Weekly aggregate counts (long format) |
-| `protocol_matrix` | Protocol × stage | Declared / Valid / Usable / Transacts counts with evidence label (Measured / Inferred / Not measured). Empty count = not measured, not zero. See arcreport.ai/protocols |
+| `rails_checks` | Store | The raw fields of the automated HTTP check (UCP profile status, MCP endpoints, catalog tool, cart status, WebMCP, platform id, evidence label) |
+| `stores` | Index store | Browser cart test results: score, test shoppers that added to cart, failure label, per-persona outcome |
+| `adoption_history` | Week × source × metric | Weekly counts |
+| `protocol_matrix` | Protocol × stage | Declared / Valid / Usable / Transacts counts per protocol |
+| `personas` | Browser test shopper | The five browser test personas |
 
-Every row has `snapshot_date`, `method_version` and `evidence` (`measured` or `inferred`).
-
-### `stores`
-| Field | Meaning |
-|---|---|
-| slug, store_name, domain, category | Store identity from ARC's public Index list |
-| homepage_url, product_url | The store homepage and the one product the scan tries to buy (query strings removed) |
-| score | ARC compatibility score, 0–100. Empty when a retest is pending |
-| agents_chose, agents_total | How many ARC browser personas added the product to the cart, out of how many |
-| failure_reason | Fixed label for where agents stopped (e.g. `Blocked at the size picker`), `Added to cart (stopped before payment)` when every shopper got the product into the cart (ARC never pays; older snapshots said `Finished the purchase`), or `other` |
-| persona_a … persona_e | Per-persona outcome: `chose`, `missed` or `error`. These are ARC browser shopper personas run on ARC-chosen models, not named consumer agents. Legacy alias ids (muse, instinct, grok, openai-dots, openclaw) are in `personas.csv` (`legacy_alias_id`) |
-| index_week, scanned_at | ISO week and UTC time of the scan |
-| evidence | `measured` when all five shoppers ran and a score exists; `inferred` otherwise |
-
-### `rails_checks`
-| Field | Meaning |
-|---|---|
-| domain, slug, category, product_url | Store checked and the product page used (query strings removed; cart URLs are never stored) |
-| status | `completed` or `failed` |
-| webmcp, storefront_mcp, ucp_mcp | Whether each interface was detected. `webmcp` is empty (not measured) for checks before 18:00 UTC on 6 Oct 2026, when detection started |
-| catalog_tool, catalog_found | Catalog tool exposed and whether it returned the product |
-| cart_status | `link`, `unavailable`, `not_offered`, `error` or `skipped` |
-| ucp_profile | `/.well-known/ucp`: `valid`, `invalid`, `absent`, `blocked` or `error` |
-| mcp_blocked | The store blocked the MCP request |
-| checked_at | UTC time of the check |
-| evidence | `measured` for a clean completed check; `inferred` when blocked, errored or failed |
-| source | `index` (ARC Index store), `directory` (curated list), `submitted` (added by the public via /agent-checkout/submit, the API or MCP, after validation) or `checked` (one-off check only) |
-
-### `adoption_history`
-`week` (ISO), `source` (`index` or `rails`), `metric` (e.g. `stores_scored`, `mean_score`, `stores_any_persona_carted`, `ucp_profile_valid`, `cart_link`, `webmcp`, `webmcp_measured`) and `value`.
-
-One definition with `stores`: index metrics use the latest completed scan per published Index store within the week, so the current week matches `stores` exactly. Rails metrics count each host once per week (its latest attempt that week). `webmcp` counts only checks after detection began; its denominator is `webmcp_measured`.
-
-### `personas`
-`persona`, `label`, `style`, `legacy_alias_id`, `method_version`.
-
-### `protocol_matrix`
-See [arcreport.ai/protocols](https://www.arcreport.ai/protocols).
-
-## Collection method
-- **Index:** five ARC browser shopper personas (A to E) each try to add one real product to the cart. Runs **stop before payment**; nothing is ever bought. See [methodology](https://www.arcreport.ai/methodology).
-- **Rails:** a plain HTTP check of each store's machine shopping interfaces, at most once per host per week, with an identifiable user agent and no model calls.
-- Exported weekly from ARC's database with a read-only token by ARC's exporter.
+Field reference for the technical tables: [arcreport.ai/data/README.md](https://www.arcreport.ai/data/README.md). Method and changelog: [arcreport.ai/methodology](https://www.arcreport.ai/methodology).
 
 ## What is excluded
-No scraped page text or product copy, no model-written prose (failure details, fixes, summaries), no raw evidence blobs, no costs or internal errors, no emails, accounts, users, sessions or visitor data. Only scores, signals, URLs and dates.
 
-## Limits
-- The store list is ARC's curated sample plus stores anyone submitted, not all of e-commerce, and leans toward Shopify-hosted DTC brands.
-- Each snapshot is frozen on its date. Live pages on arcreport.ai update hourly, so their counts (n) differ from the snapshot's.
-- The browser shoppers (ARC browser shoppers A to E) are ARC's own cart attempts, not live sessions of any consumer agent. They stop before payment.
-- A detected interface does not prove an agent can complete a purchase; a failed cart attempt can be transient.
-- Early weeks have short history.
+No scraped page text or product copy, no model-written prose, no costs, no emails, accounts or visitor data. Only ARC's own answers, signals, URLs and dates.
 
-## Licence and citation
-[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/). Attribution: **ARC, arcreport.ai**. Citation file: [arcreport.ai/CITATION.cff](https://www.arcreport.ai/CITATION.cff).
+## Licence, citation, corrections
 
-```bibtex
-@misc{arc_agent_commerce_index,
-  title  = {ARC Agent Commerce Index: open dataset},
-  author = {{ARC}},
-  howpublished = {\url{https://www.arcreport.ai/data}},
-  license = {CC-BY-4.0}
-}
-```
-
-## Corrections and opt-out
-Store owners can request a correction or removal at [arcreport.ai/contact](https://www.arcreport.ai/contact).
+[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/). Attribution: **ARC, arcreport.ai**. Store owners can ask for a correction or removal at [arcreport.ai/contact](https://www.arcreport.ai/contact).
