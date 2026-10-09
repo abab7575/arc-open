@@ -1,0 +1,22 @@
+# .github/workflows/arc-check.yml
+# Fails when your store's UCP profile stops validating or WebMCP disappears.
+# Runs after pushes to main, once a day, and on demand.
+name: ARC agent-commerce check
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+jobs:
+  arc-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Or, without the action: run: npx arcreport-check your-store.com
+      - uses: abab7575/arc-open/packages/arc-check@v0.1.0
+        with:
+          host: your-store.com
+          require: ucp,webmcp

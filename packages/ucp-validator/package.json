@@ -1,0 +1,10 @@
+{
+  "name": "@arc-open/ucp-validator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Validate a UCP business profile (/.well-known/ucp) against the published UCP JSON Schema plus spec rules the schema can't express. Pure: runs in the browser and on the server.",
+  "type": "module",
+  "main": "src/validate.ts",
+  "license": "MIT",
+  "dependencies": { "ajv": "^8.20.0", "ajv-formats": "^3.0.1" }
+}

@@ -1,0 +1,101 @@
+id,host,name,category,market,platform,platform_evidence,source,product_url,scan_slug
+arc100-v1-001,apc.fr,A.P.C.,apparel,FR,shopify,inferred,directory,https://www.apc.fr/en/products/cap-with-tee-holder-iai-cohkc-m24168,arc100-apc-fr
+arc100-v1-002,chubbiesshorts.com,Chubbies,apparel,INTL,shopify,inferred,index,https://www.chubbiesshorts.com/products/the-groovy-with-it-steelers-polo,chubbies
+arc100-v1-003,crewclothing.co.uk,Crew Clothing,apparel,GB,not_detected,none,directory,https://www.crewclothing.co.uk/kids/boys/boys-jeans-and-trousers/slim-fit-jeans-indigo-bab101/,arc100-crewclothing-co-uk
+arc100-v1-004,everlane.com,Everlane,apparel,INTL,shopify,inferred,index,https://www.everlane.com/products/womens-easy-long-short-midnight-navy,everlane
+arc100-v1-005,girlfriend.com,Girlfriend Collective,apparel,INTL,shopify,inferred,index,https://girlfriend.com/products/black-meredith-bow-tank,girlfriend
+arc100-v1-006,gymshark.com,Gymshark,apparel,INTL,shopify,inferred,index,https://www.gymshark.com/products/gymshark-adapt-animal-x-whitney-shorts-shorts-pink-aw26,gymshark
+arc100-v1-007,patagonia.com,Patagonia,apparel,INTL,not_detected,none,index,https://www.patagonia.com/product/mens-p-6-logo-responsibili-tee/38504.html,patagonia
+arc100-v1-008,phase-eight.com,Phase Eight,apparel,INTL,salesforce,measured,directory,https://www.phase-eight.com/product/nicci-belted-wool-coat-10009780408.html,arc100-phase-eight-com
+arc100-v1-009,vuoriclothing.com,Vuori,apparel,INTL,not_detected,none,index,https://vuoriclothing.com/products/kore-short-black,vuori
+arc100-v1-010,allbirds.com,Allbirds,footwear,INTL,shopify,inferred,index,https://www.allbirds.com/products/mens-canvas-runner-nz,allbirds
+arc100-v1-011,athleticpropulsionlabs.com,APL,footwear,INTL,shopify,inferred,index,https://www.athleticpropulsionlabs.com/products/womens-lusso-pool-slide-low-tide,apl
+arc100-v1-012,birdies.com,Birdies,footwear,INTL,shopify,inferred,index,https://birdies.com/products/womens-flats-new-starling-leopard-brooch-deep-earth-velvet,birdies
+arc100-v1-013,cheaney.co.uk,Cheaney,footwear,GB,not_detected,none,directory,https://www.cheaney.co.uk/avril-d-chelsea-boot-in-plum-waxy-suede-p2229,arc100-cheaney-co-uk
+arc100-v1-014,nisolo.com,Nisolo,footwear,INTL,shopify,inferred,index,https://nisolo.com/products/go-to-lug-chelsea-boot-2-0-black,nisolo
+arc100-v1-015,office.co.uk,Office,footwear,GB,not_detected,measured,directory,"https://www.office.co.uk/view/product/office_catalog/2,10/5630253250",arc100-office-co-uk
+arc100-v1-016,rmwilliams.com,R.M.Williams,footwear,INTL,salesforce,measured,directory,https://www.rmwilliams.com/loxton-5-pocket-twill-silt.html,arc100-rmwilliams-com
+arc100-v1-017,rothys.com,Rothy's,footwear,INTL,shopify,inferred,index,https://rothys.com/products/womens-ivy-sneaker-revelvet-cobalt,rothys
+arc100-v1-018,thursdayboots.com,Thursday Boot Company,footwear,INTL,shopify,inferred,index,https://thursdayboots.com/products/mens-diplomat-moc-toe-boot-badlands,thursday
+arc100-v1-019,alyaskin.com.au,Alya Skin,beauty,AU,shopify,inferred,directory,https://alyaskin.com.au/products/australian-pink-clay-mask,arc100-alyaskin-com-au
+arc100-v1-020,aureliacellular.co.uk,Aurelia London,beauty,GB,shopify,inferred,directory,https://www.aureliacellular.co.uk/products/restorative-cream-body-wash,arc100-aureliacellular-co-uk
+arc100-v1-021,byredo.com,Byredo,beauty,INTL,not_detected,none,directory,https://www.byredo.com/us_en/p/holiday-advent-calendar,arc100-byredo-com
+arc100-v1-022,drunkelephant.com,Drunk Elephant,beauty,INTL,not_detected,none,index,https://www.drunkelephant.com/collections/moisturizers/protini-polypeptide-firming-refillable-moisturizer-999DE00000103.html,drunk-elephant
+arc100-v1-023,ellaandjo.ie,Ella & Jo,beauty,IE,shopify,inferred,directory,https://ellaandjo.ie/products/ultimate-tanning-bundle-medium-dark,arc100-ellaandjo-ie
+arc100-v1-024,functionofbeauty.com,Function of Beauty,beauty,INTL,shopify,inferred,index,https://functionofbeauty.com/products/straight-hair-mask-1,function
+arc100-v1-025,rarebeauty.com,Rare Beauty,beauty,INTL,shopify,inferred,index,https://www.rarebeauty.com/products/brow-harmony-flexible-lifting-gel-jumbo,rare-beauty
+arc100-v1-026,rhodeskin.com,Rhode,beauty,INTL,shopify,inferred,index,https://www.rhodeskin.com/products/peptide-lip-tint-pretzel,rhode
+arc100-v1-027,saiehello.com,Saie,beauty,INTL,shopify,inferred,index,https://saiehello.com/products/supersuede-radiant-baked-bronzer,saie
+arc100-v1-028,theordinary.com,The Ordinary,beauty,INTL,not_detected,none,index,https://theordinary.com/en-us/niacinamide-10-zinc-1-serum-100436.html,the-ordinary
+arc100-v1-029,bulknutrients.com.au,Bulk Nutrients,supplements,AU,not_detected,none,directory,https://www.bulknutrients.com.au/products/whey-protein-isolate,arc100-bulknutrients-com-au
+arc100-v1-030,drinklmnt.com,LMNT,supplements,INTL,not_detected,none,index,https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink,lmnt
+arc100-v1-031,edubily.de,Edubily,supplements,DE,shopify,inferred,directory,https://edubily.de/products/bio-whey-protein-konzentrat,arc100-edubily-de
+arc100-v1-032,gruns.co,Grüns,supplements,INTL,shopify,inferred,index,https://gruns.co/products/electrolyte-blends-variety-pack,gruns
+arc100-v1-033,huel.com,Huel,supplements,INTL,not_detected,none,index,https://huel.com/products/huel-black-edition,huel
+arc100-v1-034,mudwtr.com,MUD\WTR,supplements,INTL,shopify,inferred,index,https://mudwtr.com/products/mud-wtr-rest-refill,mudwtr
+arc100-v1-035,naturesbest.co.uk,Natures Best,supplements,GB,shopify,inferred,directory,https://www.naturesbest.co.uk/products/resealable-pouches,arc100-naturesbest-co-uk
+arc100-v1-036,seed.com,Seed,supplements,INTL,not_detected,none,index,https://seed.com/daily-synbiotic,seed
+arc100-v1-037,us.foursigmatic.com,Four Sigmatic,supplements,INTL,shopify,inferred,index,https://us.foursigmatic.com/products/mushroom-chocolate,four-sigmatic
+arc100-v1-038,awaytravel.com,Away,home,INTL,shopify,inferred,index,https://www.awaytravel.com/products/the-carry-on-3,away
+arc100-v1-039,brooklinen.com,Brooklinen,home,INTL,shopify,inferred,index,https://www.brooklinen.com/products/pop-check-duvet-set,brooklinen
+arc100-v1-040,buffy.co,Buffy,home,INTL,shopify,inferred,index,https://buffy.co/products/organic-cotton-waffle-throw,buffy
+arc100-v1-041,casper.com,Casper,home,INTL,shopify,inferred,index,https://casper.com/products/casper-one-foam,casper
+arc100-v1-042,dunelm.com,Dunelm,home,INTL,not_detected,none,directory,https://www.dunelm.com/product/loxwood-solid-oak-bar-stool-1000157973,arc100-dunelm-com
+arc100-v1-043,floydhome.com,Floyd,home,INTL,shopify,inferred,index,https://floydhome.com/products/the-floyd-bed-w-mattress-lift-off,floyd
+arc100-v1-044,lights4fun.co.uk,Lights4fun,home,GB,shopify,inferred,directory,https://www.lights4fun.co.uk/products/100-warm-white-led-fairy-lights-on-clear-cable,arc100-lights4fun-co-uk
+arc100-v1-045,liveouter.com,Outer,home,INTL,shopify,inferred,index,https://liveouter.com/products/outerweave-outdoor-throw-pillow,outer
+arc100-v1-046,mocka.com.au,Mocka,home,AU,shopify,inferred,directory,https://www.mocka.com.au/products/nolan-office-chair-green-stripe,arc100-mocka-com-au
+arc100-v1-047,chamberlaincoffee.com,Chamberlain Coffee,food-drink,INTL,shopify,inferred,index,https://chamberlaincoffee.com/products/organic-almond-blend,chamberlain
+arc100-v1-048,daily-harvest.com,Daily Harvest,food-drink,INTL,shopify,inferred,index,https://www.daily-harvest.com/products/corsica,daily-harvest
+arc100-v1-049,dovesfarm.co.uk,Doves Farm,food-drink,GB,not_detected,none,directory,https://www.dovesfarm.co.uk/products/organic-stoneground-wholemeal-spelt-flour-1kg,arc100-dovesfarm-co-uk
+arc100-v1-050,drinktrade.com,Trade Coffee,food-drink,INTL,shopify,inferred,index,https://www.drinktrade.com/products/mejor,trade
+arc100-v1-051,hukitchen.com,Hu,food-drink,INTL,shopify,inferred,index,https://hukitchen.com/products/hu-salty,hu
+arc100-v1-052,imbibe.ie,Imbibe Coffee,food-drink,IE,shopify,inferred,directory,https://imbibe.ie/products/kaleidoscope,arc100-imbibe-ie
+arc100-v1-053,magicspoon.com,Magic Spoon,food-drink,INTL,shopify,inferred,index,https://magicspoon.com/products/strawberry-cheesecake-cereal,magic-spoon
+arc100-v1-054,palaisdesthes.com,Palais des Thés,food-drink,INTL,magento,measured,directory,https://www.palaisdesthes.com/es_es/tea-sommelier-the-160-lecons-illustrees.html,arc100-palaisdesthes-com
+arc100-v1-055,partakefoods.com,Partake,food-drink,INTL,shopify,inferred,index,https://partakefoods.com/products/mini-chocolate-chip-grahams,partake
+arc100-v1-056,53degreesnorth.ie,53 Degrees North,outdoor,IE,shopify,inferred,directory,https://www.53degreesnorth.ie/products/seal-skinz-anmer-waterproof-all-weather-ultra-grip-knitted-glove,arc100-53degreesnorth-ie
+arc100-v1-057,bergans.com,Bergans,outdoor,INTL,not_detected,none,directory,https://www.bergans.com/no/p/2977-ally-map-pocket,arc100-bergans-com
+arc100-v1-058,berghaus.com,Berghaus,outdoor,INTL,shopify,inferred,directory,https://berghaus.com/en-us/products/mens-prism-half-zip-polartec-fleece-black-4a001641bp6,arc100-berghaus-com
+arc100-v1-059,cotswoldoutdoor.com,Cotswold Outdoor,outdoor,INTL,not_detected,none,directory,https://www.cotswoldoutdoor.com/p/nikwax-tech-wash-300ml-E9714004.html,arc100-cotswoldoutdoor-com
+arc100-v1-060,durstongear.com,Durston Gear,outdoor,INTL,shopify,inferred,directory,https://durstongear.com/products/x-mid-1-groundsheet,arc100-durstongear-com
+arc100-v1-061,greatoutdoors.ie,Great Outdoors,outdoor,IE,shopify,inferred,directory,https://www.greatoutdoors.ie/products/columbia-mens-cloudview-down-hooded-jacket,arc100-greatoutdoors-ie
+arc100-v1-062,hardloop.co.uk,Hardloop,outdoor,GB,not_detected,none,directory,https://www.hardloop.co.uk/product/13-black-diamond-blizzard-ice-tool-holster,arc100-hardloop-co-uk
+arc100-v1-063,nordisk.eu,Nordisk,outdoor,EU,shopify,measured,directory,https://nordisk.eu/products/frigg-10deg-blanket-sleeping-bag-agave-green,arc100-nordisk-eu
+arc100-v1-064,paramo-clothing.com,Paramo,outdoor,INTL,woocommerce,measured,directory,https://paramo-clothing.com/en-gb/explore-range/product/unisex-fuera-ascent-windproof-jacket/,arc100-paramo-clothing-com
+arc100-v1-065,angara.com,Angara,jewelry,INTL,not_detected,none,directory,https://www.angara.com/p/pear-shaped-ruby-leaf-vine-engagement-ring-sr5063rd,arc100-angara-com
+arc100-v1-066,dowerandhall.com,Dower & Hall,jewelry,INTL,shopify,inferred,directory,https://www.dowerandhall.com/products/crown-twinkle-ring,arc100-dowerandhall-com
+arc100-v1-067,enamelcopenhagen.dk,ENAMEL Copenhagen,jewelry,DK,shopify,inferred,directory,https://enamelcopenhagen.dk/products/armbaand-sofia-bracelets-white-and-pearls,arc100-enamelcopenhagen-dk
+arc100-v1-068,georgjensen.com,Georg Jensen,jewelry,INTL,not_detected,none,directory,https://www.georgjensen.com/da-dk/soelvhaandvaerk/soelvbestik/antik-spiseske/3004011.html,arc100-georgjensen-com
+arc100-v1-069,jared.com,Jared,jewelry,INTL,not_detected,none,directory,https://www.jared.com/create-your-own-diamond-band/p/V-JCUSTOMANNIV,arc100-jared-com
+arc100-v1-070,mimco.com.au,Mimco,jewelry,AU,shopify,inferred,directory,https://mimco.com.au/products/ingot-bracelet-60243333-9570,arc100-mimco-com-au
+arc100-v1-071,momuse.ie,MoMuse,jewelry,IE,shopify,inferred,directory,https://www.momuse.ie/products/9kt-white-gold-double-circle-pendant,arc100-momuse-ie
+arc100-v1-072,queensmith.co.uk,Queensmith,jewelry,GB,not_detected,measured,directory,https://www.queensmith.co.uk/jewellery/diamond-earrings/round-halo-platinum-natural-diamond,arc100-queensmith-co-uk
+arc100-v1-073,vitalydesign.com,Vitaly,jewelry,INTL,shopify,inferred,directory,https://www.vitalydesign.com/products/kunai,arc100-vitalydesign-com
+arc100-v1-074,bigjigstoys.co.uk,Bigjigs Toys,kids,GB,shopify,inferred,directory,https://www.bigjigstoys.co.uk/products/199-steps-whitby-jigsaw-puzzle,arc100-bigjigstoys-co-uk
+arc100-v1-075,bobandblossom.co.uk,Bob & Blossom,kids,GB,shopify,inferred,directory,https://bobandblossom.co.uk/products/seafoam-white-breton-striped-number-1-t-shirt,arc100-bobandblossom-co-uk
+arc100-v1-076,bugaboo.com,Bugaboo,kids,INTL,not_detected,none,directory,https://www.bugaboo.com/us-en/strollers/bugaboo-fox-5-renew/bugaboo-fox-5-renew-2-in-1-stroller-PM007634.html,arc100-bugaboo-com
+arc100-v1-077,caramel-shop.co.uk,Caramel,kids,GB,shopify,inferred,directory,https://www.caramel-shop.co.uk/products/keira-childrens-cashmere-jumper-burgundy,arc100-caramel-shop-co-uk
+arc100-v1-078,childrensplace.com,The Children's Place,kids,INTL,not_detected,none,directory,https://www.childrensplace.com/us/p/Baby-Boys-Knit-Jogger-Pants-4-Pack-3024972-BQ,arc100-childrensplace-com
+arc100-v1-079,cybex-online.com,Cybex,kids,INTL,not_detected,none,directory,https://www.cybex-online.com/en/us/p/cs-pl-callisto-t-360-sensorsafe-3.html,arc100-cybex-online-com
+arc100-v1-080,nameit.com,Name It,kids,INTL,not_detected,none,directory,https://www.nameit.com/nl-be/ni-lmtd-dresses-skirts/ni-lmtd-bottoms-skirts/rokken/geribde-lange-rok-13224640_Elm.html,arc100-nameit-com
+arc100-v1-081,naturebaby.com,Nature Baby,kids,INTL,shopify,inferred,directory,https://naturebaby.com/products/pepi-cardigan-natural,arc100-naturebaby-com
+arc100-v1-082,rachelriley.co.uk,Rachel Riley,kids,GB,shopify,measured,directory,https://www.rachelriley.co.uk/products/flamingo-beach-bag,arc100-rachelriley-co-uk
+arc100-v1-083,edgardcooper.com,Edgard & Cooper,pets,INTL,not_detected,none,directory,https://us.edgardcooper.com/products/dog-dry-food-salmon,arc100-edgardcooper-com
+arc100-v1-084,fressnapf.de,Fressnapf,pets,DE,not_detected,none,directory,https://www.fressnapf.de/p/savic-vogelkaefig-primo-60-1241351/,arc100-fressnapf-de
+arc100-v1-085,k9ballistics.com,K9 Ballistics,pets,INTL,shopify,inferred,directory,https://k9ballistics.com/products/tough-rip-stop-dog-crate-cover,arc100-k9ballistics-com
+arc100-v1-086,littlebeast.co,Little Beast,pets,INTL,shopify,inferred,directory,https://littlebeast.co/products/new-stripes-bl-yl,arc100-littlebeast-co
+arc100-v1-087,maxizoo.ie,Maxi Zoo,pets,IE,not_detected,none,directory,https://www.maxizoo.ie/p/anione-toilet-mat-45x60-cm-gray-1241960/,arc100-maxizoo-ie
+arc100-v1-088,miacara.com,MiaCara,pets,INTL,shopify,inferred,directory,https://miacara.com/en/products/sacco-dog-food-bag,arc100-miacara-com
+arc100-v1-089,nonstopdogwear.com,Non-stop dogwear,pets,INTL,shopify,inferred,directory,https://www.nonstopdogwear.com/products/contact-bootie,arc100-nonstopdogwear-com
+arc100-v1-090,petworld.ie,Petworld,pets,IE,shopify,measured,directory,https://www.petworld.ie/products/soho-pet-bandana-2-pack-maple-woodland-100-recycled-fabric,arc100-petworld-ie
+arc100-v1-091,poochandmutt.co.uk,Pooch & Mutt,pets,GB,not_detected,measured,directory,https://www.poochandmutt.co.uk/products/gut-health-test-kit,arc100-poochandmutt-co-uk
+arc100-v1-092,alternate.de,Alternate,electronics,DE,not_detected,none,directory,https://www.alternate.de/Seagate/IronWolf-NAS-6-TB-CMR-Festplatte/html/product/1917646,arc100-alternate-de
+arc100-v1-093,audeze.com,Audeze,electronics,INTL,shopify,inferred,directory,https://www.audeze.com/products/lcd-x,arc100-audeze-com
+arc100-v1-094,beyerdynamic.com,Beyerdynamic,electronics,INTL,not_detected,none,directory,https://north-america.beyerdynamic.com/p/aventho-y,arc100-beyerdynamic-com
+arc100-v1-095,did.ie,DID Electrical,electronics,IE,shopify,inferred,directory,https://www.did.ie/products/jbl-wave-buds-2-in-ear-true-wireless-earbuds-black-jblwbuds2blk,arc100-did-ie
+arc100-v1-096,gradolabs.com,Grado,electronics,INTL,shopify,inferred,directory,https://gradolabs.com/products/grado-prestige-replacement-stylus-8mz,arc100-gradolabs-com
+arc100-v1-097,ifi-audio.com,iFi Audio,electronics,INTL,shopify,inferred,directory,https://ifi-audio.com/products/idsd-valkyrie,arc100-ifi-audio-com
+arc100-v1-098,jlab.com,JLab,electronics,INTL,shopify,inferred,directory,https://www.jlab.com/products/cloud-foam-eartips,arc100-jlab-com
+arc100-v1-099,marshall.com,Marshall,electronics,INTL,not_detected,none,directory,https://www.marshall.com/us/en/product/milton-anc,arc100-marshall-com
+arc100-v1-100,powercity.ie,Power City,electronics,IE,not_detected,measured,directory,https://powercity.ie/product/081641,arc100-powercity-ie

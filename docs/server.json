@@ -1,0 +1,29 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ai.arcreport/ask",
+  "title": "ARC: open benchmark of whether AI agents can buy",
+  "description": "Free MCP for ARC's agent-commerce benchmark: read stores and protocols; submit stores or agent runs.",
+  "websiteUrl": "https://www.arcreport.ai/for-agents",
+  "version": "2026.10.8",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://www.arcreport.ai/api/ask"
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "license": "Data CC-BY-4.0",
+      "auth": "none",
+      "readOnly": false,
+      "writeTools": {
+        "submit_store": "adds stores to the open directory (validated, plain HTTP)",
+        "submit_leaderboard_run": "submits an agent run against ARC-100 v1 (unverified until ARC re-runs a sample)",
+        "can_agent_checkout": "runs and saves a fresh plain-HTTP check of a public store (cached 24h)"
+      },
+      "docs": "https://www.arcreport.ai/llms.txt",
+      "dataset": "https://www.arcreport.ai/data",
+      "citation": "https://www.arcreport.ai/CITATION.cff"
+    }
+  }
+}

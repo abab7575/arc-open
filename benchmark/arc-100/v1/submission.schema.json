@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.arcreport.ai/data/arc-100/v1/submission.schema.json",
+  "title": "ARC leaderboard submission (arc-leaderboard-submission/v1)",
+  "description": "A run of an outside agent against ARC-100 v1. See https://www.arcreport.ai/leaderboard/spec. CC-BY-4.0.",
+  "type": "object",
+  "required": [
+    "spec",
+    "test_set",
+    "agent",
+    "run",
+    "results"
+  ],
+  "properties": {
+    "spec": {
+      "const": "arc-leaderboard-submission/v1"
+    },
+    "test_set": {
+      "const": "ARC-100 v1"
+    },
+    "agent": {
+      "type": "object",
+      "required": [
+        "name",
+        "path"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "builder": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "path": {
+          "enum": [
+            "browser",
+            "ucp",
+            "mcp",
+            "acp",
+            "api",
+            "other"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "stopped_before_payment"
+      ],
+      "properties": {
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finished_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stopped_before_payment": {
+          "const": true
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 500
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": [
+          "outcome"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "id"
+            ]
+          },
+          {
+            "required": [
+              "host"
+            ]
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^arc100-v1-[0-9]{3}$"
+          },
+          "host": {
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "added_to_cart",
+              "checkout_reached",
+              "no_cart",
+              "blocked",
+              "error",
+              "not_attempted"
+            ]
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evidence_url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://"
+          },
+          "steps": {
+            "type": "number",
+            "minimum": 0
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Private. Never published."
+    }
+  }
+}

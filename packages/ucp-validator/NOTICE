@@ -1,0 +1,4 @@
+The JSON Schemas in src/schema/ are vendored unchanged in content (re-indented) from
+https://ucp.dev/2026-08-25/schemas/, source github.com/Universal-Commerce-Protocol/ucp
+(tag v2026-08-25, source/schemas/*). They are licensed under the Apache License 2.0
+by their authors. ARC's validator code in this folder is MIT-licensed.

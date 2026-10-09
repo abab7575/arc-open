@@ -1,0 +1,25 @@
+{
+  "name": "arc-open",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open, reusable parts of ARC (arcreport.ai): the arcreport-check CLI, a UCP profile validator, the ARC-100 shopping-agent test set and leaderboard spec, and dataset docs.",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": ["packages/arc-check"],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
+    "hf:dry-run": "python3 scripts/publish_hf.py --dry-run --out ./hf-staging"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  }
+}

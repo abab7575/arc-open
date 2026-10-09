@@ -1,0 +1,55 @@
+name: ARC agent-commerce check
+description: Fail CI when a store's UCP profile or WebMCP setup breaks. Also reports catalog, checkout link, MCP, robots, product data and policies. Free, no key, ARC's open API.
+author: ARC (arcreport.ai)
+branding:
+  icon: shopping-cart
+  color: blue
+inputs:
+  host:
+    description: Store host or URL, e.g. allbirds.com. Several are allowed, separated by spaces, commas or new lines (up to 25).
+    required: true
+  require:
+    description: Comma-separated checks that must pass (ucp, catalog, checkout, mcp, webmcp, robots, product-data, policies), "all", or "none" to only report.
+    required: false
+    default: ucp,webmcp
+  strict:
+    description: Fail the job when ARC's API can't be reached or is rate-limited. By default that only warns.
+    required: false
+    default: "false"
+  api:
+    description: ARC API origin.
+    required: false
+    default: https://www.arcreport.ai
+outputs:
+  ok:
+    description: "true when every required check passed"
+    value: ${{ steps.check.outputs.ok }}
+  exit-code:
+    description: 0 pass, 1 a required check failed, 2 network error, 3 rate limited
+    value: ${{ steps.check.outputs.exit-code }}
+  report:
+    description: JSON array with each store's checks
+    value: ${{ steps.check.outputs.report }}
+runs:
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      env:
+        ARC_HOST: ${{ inputs.host }}
+        ARC_REQUIRE: ${{ inputs.require }}
+        ARC_STRICT: ${{ inputs.strict }}
+        ARC_API: ${{ inputs.api }}
+      run: |
+        set -f
+        read -r -a hosts <<< "$(printf '%s' "$ARC_HOST" | tr ',\n\r\t' '    ')"
+        set +e
+        node "$GITHUB_ACTION_PATH/bin/arc-check.mjs" "${hosts[@]}" --require "$ARC_REQUIRE" --api "$ARC_API" --summary "$GITHUB_STEP_SUMMARY"
+        code=$?
+        set -e
+        if [ "$code" = "2" ] || [ "$code" = "3" ]; then
+          if [ "$ARC_STRICT" = "true" ]; then exit 1; fi
+          echo "::warning title=ARC check::Could not check every store (ARC API unreachable or rate-limited). Not failing the job; set strict: true to fail."
+          exit 0
+        fi
+        exit "$code"

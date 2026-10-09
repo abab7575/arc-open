@@ -1,0 +1,50 @@
+{
+  "name": "arcreport-check",
+  "version": "0.1.0",
+  "description": "Free agent-commerce conformance check: is a store's UCP profile valid (live, against the published schema) and is WebMCP live? Also catalog, checkout link, MCP, robots, product data and policies, from ARC's open API. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "arc-check": "bin/arc-check.mjs",
+    "arcreport-check": "bin/arc-check.mjs"
+  },
+  "exports": "./lib/checks.mjs",
+  "files": [
+    "bin",
+    "lib/checks.mjs",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "agentic-commerce",
+    "ucp",
+    "universal-commerce-protocol",
+    "mcp",
+    "webmcp",
+    "ai-agents",
+    "checkout",
+    "shopify",
+    "conformance",
+    "ci"
+  ],
+  "homepage": "https://github.com/abab7575/arc-open/tree/main/packages/arc-check#readme",
+  "bugs": {
+    "url": "https://github.com/abab7575/arc-open/issues"
+  },
+  "license": "MIT",
+  "author": "ARC (https://www.arcreport.ai)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abab7575/arc-open.git",
+    "directory": "packages/arc-check"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.."
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
