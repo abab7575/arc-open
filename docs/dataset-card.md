@@ -20,6 +20,7 @@ A free, open, per-store answer to one question: **can an AI shopping agent find 
 | `market` | Where the storefront sells (ARC's curated label, not measured). Empty when not labelled. |
 | `checked_at` | Date (UTC) of the latest automated check. |
 | `can_agents_find_products` | Could an AI agent search the store's products through a machine-readable agent connection and get a product back (the specific product, for the ~90 Index stores where ARC tests one)? yes / no / blocked (bot protection returned a block page to ARC's check) / not_tested (the check did not finish). "no" is about agent connections only: an agent may still click through the website like a person. |
+| `can_agents_read_price_and_stock` | Does the product page ARC opened list price and stock in structured data agents can read (schema.org Product)? yes / no / not_tested (no product page could be opened). |
 | `can_agents_get_checkout_link` | Did the agent connection hand back a checkout link for a product it returned? yes / no / not_tested. ARC stops there: it never pays or places an order, so "yes" means an agent can reach checkout, not that a purchase was completed. |
 | `agent_catalog_type` | Which agent connection answered with a product search tool: Shopify UCP MCP, Shopify Storefront MCP, or none. |
 | `ucp_profile_valid` | Does the store publish a valid Universal Commerce Protocol profile at /.well-known/ucp? yes / no / unknown (blocked or errored). |
@@ -27,8 +28,8 @@ A free, open, per-store answer to one question: **can an AI shopping agent find 
 | `blocks_ai_crawlers` | Does robots.txt disallow at least one of the AI crawlers ARC tracks (answer, search or training bots) from the homepage or tested product? yes / no / unknown (robots.txt could not be read). A rule in a file, not an observed block. |
 | `blocks_ai_answer_agents` | Same, but only for AI assistants fetching pages for a user (for example ChatGPT-User, Perplexity-User). yes / no / unknown. |
 | `browser_cart_test` | Result of ARC's separate browser cart test, where it exists (about 90 stores): for example "2 of 5 added to cart". Empty means no browser test. |
-| `verdict` | One plain sentence answering "can AI agents buy from this store?" from the checks above. |
-| `top_fix` | The single most useful change for the store, in plain words. Empty when nothing is needed. |
+| `verdict` | A plain answer to "can AI agents buy from this store?", the same sentence as the store's ARC page. "Can buy" means ARC's agent got a checkout link (or browser test shoppers got the product into the cart); ARC always stops before paying. |
+| `top_fix` | The most useful change for the store, in plain words, the same as the first fix on its ARC page. Empty when nothing is needed. |
 | `checked_by` | How the answer was measured: "automated HTTP check" or "automated HTTP check + browser cart test". |
 | `evidence_url` | The store's page on ARC with the full details. |
 | `tested_url` | The page the check started from: the homepage for most stores, one product page for Index stores (query string removed). |
