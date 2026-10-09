@@ -28,7 +28,7 @@ A free, open, per-store answer to one question: **can an AI shopping agent find 
 | `blocks_ai_crawlers` | Does robots.txt disallow at least one of the AI crawlers ARC tracks (answer, search or training bots) from the homepage or tested product? yes / no / unknown (robots.txt could not be read). A rule in a file, not an observed block. |
 | `blocks_ai_answer_agents` | Same, but only for AI assistants fetching pages for a user (for example ChatGPT-User, Perplexity-User). yes / no / unknown. |
 | `browser_cart_test` | Result of ARC's separate browser cart test, where it exists (about 90 stores): for example "2 of 5 added to cart". Empty means no browser test. |
-| `verdict` | A plain answer to "can AI agents buy from this store?", the same sentence as the store's ARC page. "Can buy" means ARC's agent got a checkout link (or browser test shoppers got the product into the cart); ARC always stops before paying. |
+| `verdict` | A plain answer to "can AI agents buy from this store?", the same sentence as the store's ARC page. The strongest answer is "AI agents can reach checkout": ARC's agent got a checkout link. ARC always stops before paying, so it never claims a completed purchase. |
 | `top_fix` | The most useful change for the store, in plain words, the same as the first fix on its ARC page. Empty when nothing is needed. |
 | `checked_by` | How the answer was measured: "automated HTTP check" or "automated HTTP check + browser cart test". |
 | `evidence_url` | The store's page on ARC with the full details. |
