@@ -1,9 +1,9 @@
 ---
 license: cc-by-4.0
-pretty_name: "ARC: can AI shopping agents buy from these stores?"
+pretty_name: "ARC: can AI shopping agents reach checkout at these stores?"
 ---
 
-# Online stores checked: can AI shopping agents buy from them?
+# Online stores checked: can AI shopping agents reach checkout at them?
 
 A free, open, per-store answer to one question: **can an AI shopping agent find products and reach checkout at this store?** Published by [ARC](https://www.arcreport.ai) at [arcreport.ai/data](https://www.arcreport.ai/data) under CC-BY-4.0. A new dated snapshot every Monday.
 
@@ -28,7 +28,7 @@ A free, open, per-store answer to one question: **can an AI shopping agent find 
 | `blocks_ai_crawlers` | Does robots.txt disallow at least one of the AI crawlers ARC tracks (answer, search or training bots) from the homepage or tested product? yes / no / unknown (robots.txt could not be read). A rule in a file, not an observed block. |
 | `blocks_ai_answer_agents` | Same, but only for AI assistants fetching pages for a user (for example ChatGPT-User, Perplexity-User). yes / no / unknown. |
 | `browser_cart_test` | Result of ARC's separate browser cart test, where it exists (about 90 stores): for example "2 of 5 added to cart". Empty means no browser test. |
-| `verdict` | A plain answer to "can AI agents buy from this store?", the same sentence as the store's ARC page. The strongest answer is "AI agents can reach checkout": ARC's agent got a checkout link. ARC always stops before paying, so it never claims a completed purchase. |
+| `verdict` | A plain answer to "can AI agents reach checkout at this store?", the same sentence as the store's ARC page. The strongest answer is "AI agents can reach checkout": ARC's agent got a checkout link. ARC always stops before paying, so it never claims a completed order. |
 | `top_fix` | The most useful change for the store, in plain words, the same as the first fix on its ARC page. Empty when nothing is needed. |
 | `checked_by` | How the answer was measured: "automated HTTP check" or "automated HTTP check + browser cart test". |
 | `evidence_url` | The store's page on ARC with the full details. |
@@ -46,7 +46,7 @@ Two separate methods. Every row says which one it comes from (`checked_by`).
 
 ## Limitations (please read before citing)
 
-- **A checkout link is not a purchase.** ARC stops at the link. "yes" means an agent could reach checkout through the store's agent connection on the check date, not that an order would succeed.
+- **A checkout link is not a completed order.** ARC stops at the link. "yes" means an agent could reach checkout through the store's agent connection on the check date, not that an order would succeed.
 - **"no" is about agent connections only.** A store without one can still be used by an agent that clicks through the website like a person. Our browser cart test covers that, but only for fewer than 100 stores.
 - **One check, one moment.** Each answer is the store's latest check (dates in `checked_at`). Stores, bot protection and stock change; a single failed check can be temporary.
 - **"blocked" means ARC's own request got a block page.** Real agents may or may not be treated the same way.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.arcreport/ask",
-  "title": "ARC: open benchmark of whether AI agents can buy",
+  "title": "ARC: open benchmark of whether AI agents can reach checkout at online stores",
   "description": "Free MCP for ARC's agent-commerce benchmark: read stores and protocols; submit stores or agent runs.",
   "websiteUrl": "https://www.arcreport.ai/for-agents",
   "version": "2026.10.8",
