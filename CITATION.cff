@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use ARC data or methods, please cite it as below."
-title: "ARC Agent Commerce Index: open benchmark of whether AI agents can actually buy"
+title: "ARC Agent Commerce Index: open benchmark of whether AI agents can reach checkout at online stores"
 type: dataset
 authors:
   - family-names: Bryn
