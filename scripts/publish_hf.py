@@ -69,7 +69,7 @@ def headline_block(manifest: dict) -> str:
 | robots.txt blocks at least one AI crawler (of {h['robotsKnown']:,} readable robots.txt files) | {h['robotsBlock']:,} | {h['robotsBlockPct']}% |
 | robots.txt blocks AI assistants fetching pages for a user (same base) | {h['answerBlock']:,} | {h['answerBlockPct']}% |
 
-All rows come from ARC's **automated HTTP check**. {h['browser']} stores also have a **browser cart test** (`browser_cart_test`). A checkout link is not a purchase: ARC never pays or places an order.
+All rows come from ARC's **automated HTTP check**. {h['browser']} stores also have a **browser cart test** (`browser_cart_test`). A checkout link is not a completed order: ARC never pays or places an order.
 """
 
 
@@ -80,8 +80,8 @@ def build_card(manifest: dict, versions: list, repo: str) -> str:
     year = manifest["snapshot_date"][:4]
     default = "store_answers" if "store_answers" in tables else "rails_checks"
     h = manifest.get("headline") or {}
-    title = f"# {h['stores']:,} online stores checked: can AI shopping agents buy from them?" if h else "# ARC Agent Commerce Index"
-    yaml = ["---", "license: cc-by-4.0", 'pretty_name: "ARC: can AI shopping agents buy from these stores?"', "language:", "- en",
+    title = f"# {h['stores']:,} online stores checked: can AI shopping agents reach checkout at them?" if h else "# ARC Agent Commerce Index"
+    yaml = ["---", "license: cc-by-4.0", 'pretty_name: "ARC: can AI shopping agents reach checkout at these stores?"', "language:", "- en",
             "tags:", *[f"- {t}" for t in ["agentic-commerce", "ai-agents", "e-commerce", "shopping-agents", "benchmark", "ucp", "mcp", "webmcp", "tabular"]],
             "size_categories:", f"- {size_category(biggest)}", "configs:"]
     for t in [default] + [t for t in tables if t != default]:  # the first config is what the viewer opens
@@ -123,7 +123,7 @@ Or just download [`latest/store_answers.csv`](https://huggingface.co/datasets/{r
 
 ```bibtex
 @misc{{arc_agent_commerce_index_{year},
-  title  = {{ARC: can AI shopping agents buy from these stores? Open dataset}},
+  title  = {{ARC: can AI shopping agents reach checkout at these stores? Open dataset}},
   author = {{{{ARC}}}},
   year   = {{{year}}},
   note   = {{Snapshot {version}, method {manifest['method_version']}}},
